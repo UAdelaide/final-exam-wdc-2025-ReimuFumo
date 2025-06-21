@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
 // POST a new walk request (from owner)
 router.post('/', async (req, res) => {
-  const { dog_id, requested_time, duration_minutes, location} = req.body;
+  const { dog_id, requested_time, duration_minutes, location } = req.body;
 
   try {
     const [result] = await db.query(`
@@ -31,9 +31,11 @@ router.post('/', async (req, res) => {
 
     res.status(201).json({ message: 'Walk request created', request_id: result.insertId });
   } catch (error) {
+    console.error('Error creating walk request:', error);
     res.status(500).json({ error: 'Failed to create walk request' });
   }
 });
+
 
 // POST an application to walk a dog (from walker)
 router.post('/:id/apply', async (req, res) => {
