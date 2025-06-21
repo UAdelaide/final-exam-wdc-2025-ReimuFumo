@@ -62,7 +62,7 @@
 });
 
 const data = await response.json();
-
+//Redirecting
 if (response.ok) {
   if (data.role === 'owner') {
     window.location.href = 'owner-dashboard.html';
@@ -73,8 +73,6 @@ if (response.ok) {
   alert('Login failed: ' + data.error);
 }
 
-
-          const { role } = await response.json();
 
           // Redirect user based on role
           if (role === 'owner') {
