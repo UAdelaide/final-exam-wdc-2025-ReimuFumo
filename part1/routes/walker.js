@@ -31,7 +31,8 @@ router.get('/walkers/summary', async (req, res) => {
         SELECT COUNT(*)
         FROM WalkerApplications wa
         JOIN WalkRequests wr ON wa.request_id = wr.request_id
-        WHERE wa.walker_id = u.user_id AND wr.status = 'completed
+        WHERE wa.walker_id = u.user_id AND wr.status = 'completed' AND wa.status = 'accepted'
+        
     )
     FROM Messages m
     JOIN BookListings bl ON m.BookID = bl.BookID
