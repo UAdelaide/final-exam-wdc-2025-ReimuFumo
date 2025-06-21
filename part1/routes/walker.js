@@ -32,14 +32,8 @@ router.get('/walkers/summary', async (req, res) => {
         FROM WalkerApplications wa
         JOIN WalkRequests wr ON wa.request_id = wr.request_id
         WHERE wa.walker_id = u.user_id AND wr.status = 'completed' AND wa.status = 'accepted'
-        
-    )
-    FROM Messages m
-    JOIN BookListings bl ON m.BookID = bl.BookID
-    JOIN BookInfo bi ON bl.BookInfoID = bi.BookInfoID
-    JOIN Users u ON m.BuyerID = u.UserID
-    WHERE m.SellerID = ?
-    ORDER BY m.SentAt DESC
+    ) AS completed_walks
+    
   `);
   res.json(rows);
 });
