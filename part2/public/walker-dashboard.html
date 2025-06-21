@@ -40,7 +40,6 @@
 
   <script>
     const { createApp, ref, onMounted } = Vue;
-
     createApp({
       setup() {
         const walks = ref([]);
@@ -70,11 +69,16 @@
         }
 
         async function applyToWalk(requestId) {
+          if (!currentUser.value) {
+            error.value = 'You must be logged in to apply.';
+            return;
+          }
+
           try {
             const res = await fetch(`/api/walks/${requestId}/apply`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: user })
+              body: JSON.stringify({ walker_id: currentUser.value.id }) // Use currentUser.id
             });
             const result = await res.json();
 
@@ -88,8 +92,9 @@
           }
         }
 
-        onMounted(() => {
-          loadWalkRequests();
+        onMounted(async () => {
+          await getCurrentUser(); // Make sure to fetch user info
+          await loadWalkRequests();
         });
 
         return {
@@ -100,6 +105,7 @@
         };
       }
     }).mount('#app');
+
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       const res = await fetch('http://localhost:8081/api/users/logout', {
         method: 'POST',
