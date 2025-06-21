@@ -33,7 +33,7 @@ router.get('/walkers/summary', async (req, res) => {
     JOIN Users u ON m.BuyerID = u.UserID
     WHERE m.SellerID = ?
     ORDER BY m.SentAt DESC
-  `, [CURRENT_BUYER_ID]);
+  `);
   res.json(rows);
 });
 
