@@ -85,6 +85,41 @@
         const message = ref('');
         const error = ref('');
 
+        async function loadDogs() {
+    try {
+      const res = await fetch('http://localhost:8081/api/dogs', {
+        credentials: 'include'
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to load dogs');
+      }
+
+      const dogs = await res.json();
+
+      const select = document.getElementById('dogSelect');
+      select.innerHTML = ''; // Clear loading option
+
+      if (dogs.length === 0) {
+        select.innerHTML = '<option value="">No dogs found</option>';
+        return;
+      }
+
+      dogs.forEach(dog => {
+        const option = document.createElement('option');
+        option.value = dog.dog_id;
+        option.textContent = dog.name;
+        select.appendChild(option);
+      });
+    } catch (err) {
+      console.error(err);
+      const select = document.getElementById('dogSelect');
+      select.innerHTML = '<option value="">Error loading dogs</option>';
+    }
+  }
+
+  loadDogs();
+
         async function loadWalks() {
           try {
             const res = await fetch('/api/walks');
