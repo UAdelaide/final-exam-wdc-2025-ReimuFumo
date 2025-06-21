@@ -10,11 +10,12 @@ router.get('/', async (req, res) => {
   try {
     const ownerId = req.session.user.id;
     const [dogs] = await db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId]);
-    res.json(dogs);
+    return res.json(dogs);// <-- add return here
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to fetch dogs' });
+    return res.status(500).json({ error: 'Failed to fetch dogs' }); // <-- add return here
   }
 });
+
 
 module.exports = router;
