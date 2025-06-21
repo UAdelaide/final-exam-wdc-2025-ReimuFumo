@@ -96,7 +96,7 @@
 
         async loadDogs() {
           try {
-            const res = await fetch('/api/dogs', { credentials: 'include' });
+            const res = await fetch('/api/dogs/list', { credentials: 'include' });
             if (!res.ok) throw new Error('Failed to load dogs');
             const dogsData = await res.json();
 
