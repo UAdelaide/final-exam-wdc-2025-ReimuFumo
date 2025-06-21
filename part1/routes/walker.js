@@ -20,9 +20,8 @@ router.get('/walkrequest/open', async (req, res) => {
     JOIN BookListings bl ON m.BookID = bl.BookID
     JOIN BookInfo bi ON bl.BookInfoID = bi.BookInfoID
     JOIN Users u ON m.BuyerID = u.UserID
-    WHERE m.SellerID = ?
-    ORDER BY m.SentAt DESC
-  `, [CURRENT_BUYER_ID]);
+    WHERE wr.status = 'open'
+  `,);
   res.json(rows);
 });
 
