@@ -36,11 +36,9 @@ router.get('/walkers/summary', async (req, res) => {
     FROM Users u
     LEFT JOIN WalkRatings r ON u.user_id = r.walker_id
     WHERE u.role = 'walker'
-    
+    GROUP BY u.user_id
   `);
   res.json(rows);
 });
-
-
 
 module.exports = router;
