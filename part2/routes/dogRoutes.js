@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/db'); // adjust to your actual DB connection
 
+//
 router.get('/', async (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
     return res.status(401).json({ error: 'Unauthorized' });
