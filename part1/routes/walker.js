@@ -14,7 +14,7 @@ router.get('/dogs', async (req,res) => {
         res.json(rows);
 });
 
-router.get('/messages', async (req, res) => {
+router.get('/walkrequest', async (req, res) => {
   const [rows] = await db.query(`
     SELECT m.MessageText, m.SentAt, bi.Title, u.Name AS BuyerName
     FROM Messages m
