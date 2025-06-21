@@ -20,7 +20,9 @@ router.get('/', async (req, res) => {
 
 router.get('/list', async (req, res) => {
   try {
-    const [dogs] = await db.query('SELECT dog_id, name, size, owner_id FROM Dogs');
+    const [dogs] = await db.query(`
+      SELECT dog_id, name, size, owner_id FROM Dogs
+    `);
     res.json(dogs);
   } catch (err) {
     console.error('Failed to get dogs:', err);
