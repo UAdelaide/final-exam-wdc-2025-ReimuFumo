@@ -17,16 +17,55 @@
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
   </div>
 
-  <script>
-    const { createApp } = Vue;
-    createApp({
-      data() {
-        return {
-          message: 'Welcome to the Dog Walking Service!'
-        };
+ <script>
+  const { createApp } = Vue;
+
+  createApp({
+    data() {
+      return {
+        message: 'Welcome to the Dog Walking Service!',
+        username: '',
+        password: '',
+        errorMessage: ''
+      };
+    },
+    methods: {
+      async handleLogin() {
+        try {
+          const response = await fetch('http://localhost:8081/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: this.username,
+              password: this.password
+            }),
+            credentials: 'include' // Required to maintain session
+          });
+
+          if (!response.ok) {
+            const { error } = await response.json();
+            this.errorMessage = error || 'Login failed.';
+            return;
+          }
+
+          const { role } = await response.json();
+
+          // Redirect user based on role
+          if (role === 'owner') {
+            window.location.href = 'owner-dashboard.html';
+          } else if (role === 'walker') {
+            window.location.href = 'walker-dashboard.html';
+          } else {
+            this.errorMessage = 'Unknown user role.';
+          }
+        } catch (err) {
+          this.errorMessage = 'Network error. Please try again later.';
+        }
       }
-    }).mount('#app');
-  </script>
+    }
+  }).mount('#app');
+</script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
