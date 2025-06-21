@@ -15,7 +15,7 @@ router.get('/dogs', async (req,res) => {
 
 router.get('/walkrequest/open', async (req, res) => {
   const [rows] = await db.query(`
-    SELECT m.MessageText, m.SentAt, bi.Title, u.Name AS BuyerName
+    SELECT wr.request_id, d.name AS dog_name,
     FROM Messages m
     JOIN BookListings bl ON m.BookID = bl.BookID
     JOIN BookInfo bi ON bl.BookInfoID = bi.BookInfoID
