@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // Session setup
 app.use(session({
-  secret: 'supersecretkey', // In production, use process.env.SESSION_SECRET
+  secret: 'supersecretkey',
   resave: false,
   saveUninitialized: false,
   cookie: {
