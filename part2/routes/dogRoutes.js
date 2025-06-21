@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // adjust to your actual DB connection
+const db = require('../models/db'); // adjust to your actual DB connection
 
 router.get('/', async (req, res) => {
   if (!req.session.user || req.session.user.role !== 'owner') {
