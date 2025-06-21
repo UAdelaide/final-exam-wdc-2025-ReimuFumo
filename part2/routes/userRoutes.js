@@ -38,7 +38,6 @@ router.get('/me', (req, res) => {
 // POST login (dummy version)
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  console.log('Login attempt:', username, password);
 
   try {
     const [rows] = await db.query(
@@ -59,10 +58,8 @@ router.post('/login', async (req, res) => {
 
     res.json({ role: user.role });
   } catch (err) {
-    console.error('Login error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 module.exports = router;
