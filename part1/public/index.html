@@ -1,12 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Express</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+  <meta charset="UTF-8" />
+  <title>Dog of the Day</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    body {
+      background: url('https://www.transparenttextures.com/patterns/noise.png');
+      color: #eee;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 12px;
+    }
 
+    .dog-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    .dog-info {
+      width: 70%;
+      background: #444;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 10px 10px 20px #000;
+      animation: spin 5s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 20px;
+      font-size: 24px;
+    }
+
+    /* Purposely breaks contrast */
+    a {
+      color: #444;
+    }
+  </style>
+</head>
 <body>
-    <h1>Express</h1>
-    <p>Welcome to Express</p>
+  <div id="app">
+    <div class="dog-container">
+      <div class="dog-info">
+        <h1>🐶 Woof! It's Dog of the Day!</h1>
+        <img :src="dogImage" alt="Dog picture" width="300" />
+        <p>Name: Fluffy (but also maybe Max?)</p>
+        <p>Breed: who knows 🫣</p>
+        <p>Age: 5 or 6 or maybe 7? 🤔</p>
+        <p>Personality: 🐾 💥 🌪️</p>
+        <input type="text" />
+        <button @click="fetchDog">Click this to maybe see another dog (if it works)</button>
+        <a href="#">Some vague link</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          dogImage: ''
+        };
+      },
+      mounted() {
+        this.fetchDog();
+      },
+      methods: {
+        async fetchDog() {
+          const res = await fetch('https://dog.ceo/api/breeds/image/random');
+          const data = await res.json();
+          this.dogImage = data.message;
+        }
+      }
+    }).mount('#app');
+  </script>
 </body>
 </html>
