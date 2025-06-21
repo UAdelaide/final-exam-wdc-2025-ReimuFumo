@@ -14,7 +14,7 @@ router.get('/dogs', async (req,res) => {
         res.json(rows);
 });
 
-router.get('/walkrequest', async (req, res) => {
+router.get('/walkrequest/open', async (req, res) => {
   const [rows] = await db.query(`
     SELECT m.MessageText, m.SentAt, bi.Title, u.Name AS BuyerName
     FROM Messages m
@@ -28,12 +28,5 @@ router.get('/walkrequest', async (req, res) => {
 });
 
 
-router.post('/messages', async (req,res) => {
-    const { bookID, sellerID, message } = req.body;
-    await db.query(`
-        Insert Into Messages (BuyerID, SellerID, BookID, MessageText, SentAt)
-        Values (?, ?, ?, ?, Now())
-        `, [CURRENT_BUYER_ID, sellerID, bookID, message]);
-    res.status(201).json({ message: 'Message sent!' });
-});
+
 module.exports = router;
